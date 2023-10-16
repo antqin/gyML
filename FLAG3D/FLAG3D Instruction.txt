@@ -1,0 +1,11 @@
+Language(annotations.zip): Axxx represents the action of xxx. I001 represents the name of the action, and I002 represents the description of the action. Every action contains the parts above. For some actions, we provided more detailed information.  
+
+SMPL(smpl_param.zip): Mxxx represents the avatar of the number xxx. Pxxx represents the action of person number xxx. Axxx represents the action of xxx. R represents the repeat times of the same action.
+
+Skeleton(keypoint.pkl): Skeleton data shares the same structure as NTU-RGB+D 120. Mxxx represents the avatar of the number xxx. Pxxx represents the action of person number xxx. Axxx represents the action of xxx. R represents the repeat times of the same action.
+
+Rendering Video(subsetvideo.zip): We share a subset of it that contains 1800 videos because of the data size. If you need more, please email us. Sxxx represents the scene of number xxx. Cxxx represents the camera position of number xxx. Mxxx represents the avatar of the number xxx. Pxxx represents the action of person number xxx. Axxx represents the action of xxx. R represents the repeat times of the same action.
+
+Video from Nature Scene(natural scene): V001 represents the front view and V002 represents the side view.
+
+Raw Data(raw_data)

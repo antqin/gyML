@@ -1,0 +1,2 @@
+mistake: too fast
+solution: pause slightly after each stage of the action.

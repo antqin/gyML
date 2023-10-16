@@ -1,0 +1,2 @@
+mistake: shift your weight backward.
+solution: reduce the range of the leg lift, and keep the body stable.

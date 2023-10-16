@@ -1,0 +1,2 @@
+mistake: the speed of movement is too fast.
+solution: slow down the action, and feel the muscle's strength and contraction.

@@ -1,0 +1,2 @@
+mistake: heel dropping makes a sound.
+solution: gently lift and gently put down.

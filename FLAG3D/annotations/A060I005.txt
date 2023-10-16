@@ -1,0 +1,2 @@
+mistake: the foot landing sounds too loud, and the foot landing is not controlled.
+solution: the landing sound should be lighter to reduce the impact on your lower limb joints.

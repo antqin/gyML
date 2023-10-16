@@ -1,0 +1,2 @@
+mistake: the waist can not be on the ground.
+solution: do not drop your legs too low.

@@ -1,0 +1,2 @@
+mistake: your hips follow the rotation when turning.
+solution: keep your hips stable and still.

@@ -1,0 +1,2 @@
+mistake: lower limbs follow upper limbs to turn.
+solution: keep the other arm against the inside of the knee to prevent the lower limb from following the upper body rotation.
