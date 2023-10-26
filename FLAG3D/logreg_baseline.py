@@ -25,24 +25,21 @@ def load_data_from_directory(directory):
                 continue
     return X, y
 
+def get_max_len(array_list):
+    return max(arr.shape[0] for arr in array_list)
+
 # Function to pad arrays in a list to have the same length
-def pad_arrays(array_list):
-    # Determine the maximum length among all arrays
-    max_length = max(arr.shape[0] for arr in array_list)
-    
+def pad_arrays(array_list, len):
     # Pad each array to match the maximum length
     padded_list = []
     for arr in array_list:
-        padded_arr = np.pad(arr, (0, max_length - arr.shape[0]))
+        padded_arr = np.pad(arr, (0, len - arr.shape[0]))
         padded_list.append(padded_arr)
     
     return np.array(padded_list)
 
 # Load train, dev, and test data
 X_train, y_train = load_data_from_directory('dataset/train')
-print(len(X_train))
-print(len(y_train))
-
 X_train = [x.flatten() for x in X_train]  # Flatten the 'poses' arrays for each training example
 
 X_dev, y_dev = load_data_from_directory('dataset/dev')
@@ -51,19 +48,30 @@ X_dev = [x.flatten() for x in X_dev]  # Flatten the 'poses' arrays for each dev 
 X_test, y_test = load_data_from_directory('dataset/test')
 X_test = [x.flatten() for x in X_test]  # Flatten the 'poses' arrays for each test example
 
-X_train = pad_arrays(X_train)
-X_dev = pad_arrays(X_dev)
-X_test = pad_arrays(X_test)
+print(len(X_train[0]))
+print(len(X_dev[0]))
+print(len(X_test[0]))
+train_dimension = get_max_len(X_train)
+dev_dimension = get_max_len(X_dev)
+test_dimension = get_max_len(X_test)
+max_len = max(max(train_dimension, dev_dimension), test_dimension)
+X_train = pad_arrays(X_train, max_len)
+X_dev = pad_arrays(X_dev, max_len)
+X_test = pad_arrays(X_test, max_len)
+print(len(X_train[0]))
+print(len(X_dev[0]))
+print(len(X_test[0]))
+
 
 # Load the trained model
-# clf = load('logreg_model.pkl')
+clf = load('logreg_model_100.pkl')
 
 # Initialize the Logistic Regression model with one-vs-rest strategy
-clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
+# clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
 
 # Train the model
-clf.fit(X_train, y_train)
-dump(clf, 'logreg_model.pkl')
+# clf.fit(X_train, y_train)
+# dump(clf, 'logreg_model.pkl')
 
 # Predict on the dev set (or test set)
 y_pred_dev = clf.predict(X_dev)
@@ -85,7 +93,6 @@ plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
 plt.savefig("confusion_matrix_logreg.png", dpi=300)
-plt.show()
 
 # Coefficients Visualization
 plt.figure(figsize=(15, 5))
