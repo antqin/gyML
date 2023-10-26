@@ -62,16 +62,15 @@ print(len(X_train[0]))
 print(len(X_dev[0]))
 print(len(X_test[0]))
 
-
 # Load the trained model
-clf = load('logreg_model_100.pkl')
+# clf = load('logreg_model_100.pkl')
 
-# Initialize the Logistic Regression model with one-vs-rest strategy
-# clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
+# Initialize the Logistic Regression model with multinomial strategy
+clf = LogisticRegression(max_iter=1000, multi_class='multinomial', solver='saga', verbose=1)
 
 # Train the model
-# clf.fit(X_train, y_train)
-# dump(clf, 'logreg_model.pkl')
+clf.fit(X_train, y_train)
+dump(clf, 'logreg_multi_model_1000.pkl')
 
 # Predict on the dev set (or test set)
 y_pred_dev = clf.predict(X_dev)
