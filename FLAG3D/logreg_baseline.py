@@ -41,6 +41,8 @@ def pad_arrays(array_list):
 # Load train, dev, and test data
 X_train, y_train = load_data_from_directory('dataset/train')
 print(len(X_train))
+print(len(y_train))
+
 X_train = [x.flatten() for x in X_train]  # Flatten the 'poses' arrays for each training example
 
 X_dev, y_dev = load_data_from_directory('dataset/dev')
@@ -57,7 +59,7 @@ X_test = pad_arrays(X_test)
 # clf = load('logreg_model.pkl')
 
 # Initialize the Logistic Regression model with one-vs-rest strategy
-clf = LogisticRegression(max_iter=1000, multi_class='ovr', solver='saga', verbose=1)
+clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
 
 # Train the model
 clf.fit(X_train, y_train)
@@ -75,13 +77,8 @@ y_pred_test = clf.predict(X_test)
 accuracy_test = accuracy_score(y_test, y_pred_test)
 print(f"Accuracy on Test set: {accuracy_test:.2f}")
 
-# For Logistic Regression:
-clf_logistic = LogisticRegression(max_iter=10000, multi_class='ovr', solver='saga')
-clf_logistic.fit(X_train, y_train)
-y_pred_logistic = clf_logistic.predict(X_dev)
-
 # Confusion Matrix for Logistic Regression
-cm_logistic = confusion_matrix(y_dev, y_pred_logistic)
+cm_logistic = confusion_matrix(y_dev, y_pred_dev)
 plt.figure(figsize=(12, 10))
 sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
@@ -92,7 +89,7 @@ plt.show()
 
 # Coefficients Visualization
 plt.figure(figsize=(15, 5))
-plt.bar(range(len(X_train[0])), clf_logistic.coef_[0])  # Change index for other classes
+plt.bar(range(len(X_train[0])), clf.coef_[0])  # Change index for other classes
 plt.title('Feature Coefficients for Logistic Regression (Class 0)')
 plt.xlabel('Features')
 plt.ylabel('Coefficient Value')

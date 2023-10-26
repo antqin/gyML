@@ -68,13 +68,8 @@ y_pred_test = clf.predict(X_test)
 accuracy_test = accuracy_score(y_test, y_pred_test)
 print(f"Accuracy on Test set: {accuracy_test:.2f}")
 
-# For Random Forest:
-clf_rf = RandomForestClassifier(n_estimators=100, random_state=42)
-clf_rf.fit(X_train, y_train)
-y_pred_rf = clf_rf.predict(X_dev)
-
 # Confusion Matrix for Random Forest
-cm_rf = confusion_matrix(y_dev, y_pred_rf)
+cm_rf = confusion_matrix(y_dev, y_pred_dev)
 plt.figure(figsize=(12, 10))
 sns.heatmap(cm_rf, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Random Forest')
@@ -85,7 +80,7 @@ plt.show()
 
 # Feature Importance Visualization
 plt.figure(figsize=(15, 5))
-plt.bar(range(len(X_train[0])), clf_rf.feature_importances_)
+plt.bar(range(len(X_train[0])), clf.feature_importances_)
 plt.title('Feature Importances for Random Forest')
 plt.xlabel('Features')
 plt.ylabel('Importance Value')
