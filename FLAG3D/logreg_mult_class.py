@@ -66,7 +66,7 @@ print(len(X_test[0]))
 # clf = load('logreg_model_100.pkl')
 
 # Initialize the Logistic Regression model with multinomial strategy
-clf = LogisticRegression(max_iter=1000, multi_class='multinomial', solver='saga', verbose=1)
+clf = LogisticRegression(max_iter=1000, multi_class='multinomial', solver='saga', verbose=1, n_jobs=-1)
 
 # Train the model
 clf.fit(X_train, y_train)
