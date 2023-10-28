@@ -91,7 +91,7 @@ sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
-plt.savefig("confusion_matrix_logreg.png", dpi=300)
+plt.savefig("logreg_mc_confusion_matrix.png", dpi=300)
 
 # Coefficients Visualization
 plt.figure(figsize=(15, 5))
@@ -99,5 +99,5 @@ plt.bar(range(len(X_train[0])), clf.coef_[0])  # Change index for other classes
 plt.title('Feature Coefficients for Logistic Regression (Class 0)')
 plt.xlabel('Features')
 plt.ylabel('Coefficient Value')
-plt.savefig("feature_coefficients_logreg.png", dpi=300)
+plt.savefig("logreg_mc_feature_coefficients.png", dpi=300)
 plt.show()
