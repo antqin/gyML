@@ -70,12 +70,12 @@ print(len(X_test[0]))
 clf = LogisticRegression(max_iter=100, multi_class='multinomial', solver='saga', verbose=1)
 
 # Apply PCA to training data
-pca = PCA(n_components=0.25)
+pca = PCA(n_components=0.75)
 X_train_pca = pca.fit_transform(X_train)
 
 # Train the model
 clf.fit(X_train_pca, y_train)
-dump(clf, 'pca_logreg_100.pkl')
+dump(clf, 'pca75_logreg_100iter.pkl')
 
 # Predict on the dev set (or test set)
 X_dev_pca = pca.transform(X_dev)
@@ -98,13 +98,13 @@ sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
-plt.savefig("logreg_mc_confusion_matrix.png", dpi=300)
+plt.savefig("pca_75_logreg_mc_confusion_matrix.png", dpi=300)
 
 # Coefficients Visualization
-plt.figure(figsize=(15, 5))
-plt.bar(range(len(X_train[0])), clf.coef_[0])  # Change index for other classes
-plt.title('Feature Coefficients for Logistic Regression (Class 0)')
-plt.xlabel('Features')
-plt.ylabel('Coefficient Value')
-plt.savefig("logreg_mc_feature_coefficients.png", dpi=300)
-plt.show()
+# plt.figure(figsize=(15, 5))
+# plt.bar(range(len(X_train[0])), clf.coef_[0])  # Change index for other classes
+# plt.title('Feature Coefficients for Logistic Regression (Class 0)')
+# plt.xlabel('Features')
+# plt.ylabel('Coefficient Value')
+# plt.savefig("logreg_mc_feature_coefficients.png", dpi=300)
+# plt.show()
