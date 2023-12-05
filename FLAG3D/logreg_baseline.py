@@ -64,7 +64,7 @@ print(len(X_test[0]))
 
 
 # Load the trained model
-clf = load('logreg_model_100.pkl')
+clf = load('logreg_model_200.pkl')
 
 # Initialize the Logistic Regression model with one-vs-rest strategy
 # clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
@@ -92,7 +92,7 @@ sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
-plt.savefig("confusion_matrix_logreg.png", dpi=300)
+plt.savefig("confusion_matrix_logreg_200.png", dpi=300)
 
 # Coefficients Visualization
 plt.figure(figsize=(15, 5))
@@ -100,5 +100,5 @@ plt.bar(range(len(X_train[0])), clf.coef_[0])  # Change index for other classes
 plt.title('Feature Coefficients for Logistic Regression (Class 0)')
 plt.xlabel('Features')
 plt.ylabel('Coefficient Value')
-plt.savefig("feature_coefficients_logreg.png", dpi=300)
+plt.savefig("feature_coefficients_logreg_200.png", dpi=300)
 plt.show()
