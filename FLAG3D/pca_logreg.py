@@ -70,12 +70,12 @@ print(len(X_test[0]))
 clf = LogisticRegression(max_iter=100, multi_class='multinomial', solver='saga', verbose=1)
 
 # Apply PCA to training data
-pca = PCA(n_components=0.75)
+pca = PCA(n_components=0.70)
 X_train_pca = pca.fit_transform(X_train)
 
 # Train the model
 clf.fit(X_train_pca, y_train)
-dump(clf, 'pca75_logreg_100iter.pkl')
+dump(clf, 'pca70_logreg_100iter.pkl')
 
 # Predict on the dev set (or test set)
 X_dev_pca = pca.transform(X_dev)
@@ -98,7 +98,7 @@ sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
-plt.savefig("pca_75_logreg_mc_confusion_matrix.png", dpi=300)
+plt.savefig("pca_70_logreg_mc_confusion_matrix.png", dpi=300)
 
 # Coefficients Visualization
 # plt.figure(figsize=(15, 5))
