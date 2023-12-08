@@ -3,7 +3,7 @@ import numpy as np
 from joblib import dump, load
 from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, recall_score, precision_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
@@ -43,59 +43,58 @@ def pad_arrays(array_list, len):
 X_train, y_train = load_data_from_directory('dataset/train')
 X_train = [x.flatten() for x in X_train]  # Flatten the 'poses' arrays for each training example
 
-X_dev, y_dev = load_data_from_directory('dataset/dev')
-X_dev = [x.flatten() for x in X_dev]  # Flatten the 'poses' arrays for each dev example
-
 X_test, y_test = load_data_from_directory('dataset/test')
 X_test = [x.flatten() for x in X_test]  # Flatten the 'poses' arrays for each test example
 
 print(len(X_train[0]))
-print(len(X_dev[0]))
 print(len(X_test[0]))
 train_dimension = get_max_len(X_train)
-dev_dimension = get_max_len(X_dev)
 test_dimension = get_max_len(X_test)
-max_len = max(max(train_dimension, dev_dimension), test_dimension)
+max_len = max(train_dimension, test_dimension)
 X_train = pad_arrays(X_train, max_len)
-X_dev = pad_arrays(X_dev, max_len)
 X_test = pad_arrays(X_test, max_len)
 print(len(X_train[0]))
-print(len(X_dev[0]))
 print(len(X_test[0]))
 
 # Load the trained model
 # clf = load('logreg_model_100.pkl')
 
 # Initialize the Logistic Regression model with multinomial strategy
-clf = LogisticRegression(max_iter=100, multi_class='multinomial', solver='saga', verbose=1)
+clf = LogisticRegression(max_iter=100, multi_class='ovr', solver='saga', verbose=1)
 
 # Apply PCA to training data
-pca = PCA(n_components=0.70)
+pca = PCA(n_components=0.75)
 X_train_pca = pca.fit_transform(X_train)
+
+print('PCA complete')
 
 # Train the model
 clf.fit(X_train_pca, y_train)
-dump(clf, 'pca70_logreg_100iter.pkl')
-
-# Predict on the dev set (or test set)
-X_dev_pca = pca.transform(X_dev)
-y_pred_dev = clf.predict(X_dev_pca)
-
-# Calculate the accuracy
-accuracy = accuracy_score(y_dev, y_pred_dev)
-print(f"Baseline Accuracy on Dev set: {accuracy:.2f}")
+# dump(clf, 'pca75_logreg_100iter.pkl')
+dump(clf, 'temp.pkl')
+print('model training complete...')
 
 # If the dev set performance is satisfactory, you can evaluate on the test set
-X_test_pca = pca.transform(X_test)
-y_pred_test = clf.predict(X_test_pca)
+X_test = pca.transform(X_test)
+y_pred_test = clf.predict(X_test)
+
+# Calculate accuracy, recall, and precision on the test set
 accuracy_test = accuracy_score(y_test, y_pred_test)
+recall_test = recall_score(y_test, y_pred_test, average='weighted')
+precision_test = precision_score(y_test, y_pred_test, average='weighted')
+
+# Print the results
+print(f"Number of Features: {clf.coef_.shape[1]}")
 print(f"Accuracy on Test set: {accuracy_test:.2f}")
+print(f"Recall on Test set: {recall_test:.2f}")
+print(f"Precision on Test set: {precision_test:.2f}")
 
 # Confusion Matrix for Logistic Regression
-cm_logistic = confusion_matrix(y_dev, y_pred_dev)
+cm_logistic = confusion_matrix(y_test, y_pred_test)
 plt.figure(figsize=(12, 10))
 sns.heatmap(cm_logistic, annot=True, fmt='g', cmap='Blues')
 plt.title('Confusion Matrix for Logistic Regression')
 plt.xlabel('Predicted labels')
 plt.ylabel('True labels')
-plt.savefig("pca_70_logreg_mc_confusion_matrix.png", dpi=300)
+plt.savefig("temp.png", dpi=300)
+# plt.savefig("pca_75_logreg_mc_confusion_matrix.png", dpi=300)

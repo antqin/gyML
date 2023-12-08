@@ -57,11 +57,11 @@ bad_valleys, _ = find_peaks(-np.array(bad_smoothed_similarity))
 # bad_number_of_repetitions = max(len(bad_peaks), len(bad_valleys))
 # print(f'Number of repetitions: {bad_number_of_repetitions}')
 
-# plt.plot(range(151, 591), bad_smoothed_similarity)
-# plt.xlabel('Frame Number')
-# plt.ylabel('Similarity')
-# plt.title('Similarity between Start Pose and Each Frame')
-# plt.show()
+plt.plot(range(151, 591), bad_smoothed_similarity)
+plt.xlabel('Frame Number')
+plt.ylabel('L2 Norm')
+plt.title('L2 Norm of Difference Vector Between Start Pose and Each Frame')
+plt.show()
 
 
 good_data = load('/Users/adityatadimeti/gyML/demo_IMG_9453.pkl')
