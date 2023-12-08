@@ -12,12 +12,16 @@ from sklearn.metrics import confusion_matrix
 def load_data_from_directory(directory):
     X = []
     y = []
+    # count = 0
     for filename in os.listdir(directory):
         if filename.endswith(".pkl"):
             filepath = os.path.join(directory, filename)
             try:
                 data = load(filepath)
                 poses_data = data['poses']
+                # if count==0:
+                #     print(poses_data.shape)
+                #     count += 1
                 X.append(poses_data)  # Use only the 'poses' data as features
                 action = filename.split('A')[1][:3]  # Extracting the Axxx part
                 y.append(action)
@@ -57,7 +61,7 @@ explained_variance_ratio = pca.explained_variance_ratio_
 cumulative_explained_variance = np.cumsum(explained_variance_ratio)
 
 # Increase fontsize and bold text
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(12, 6))
 
 # Plot the explained variance ratio
 plt.subplot(1, 2, 1)
